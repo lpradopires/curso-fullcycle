@@ -7,4 +7,4 @@ Author : Leandro Prado Pires
 Email: leandropradopires02@gmail.com
 
 Mapa do Curso
-![Mapa do curso](https://github.com/lpradopires/cursofullcycle/blob/main/documentos/Mapa-fullcycle-novo.jpg)
+![Mapa do curso](https://github.com/lpradopires/curso-fullcycle/blob/main/documentos/Mapa-fullcycle-novo.jpg)
