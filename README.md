@@ -9,3 +9,8 @@ Email: leandropradopires02@gmail.com
 Mapa do Curso
 ![Mapa do curso](https://github.com/lpradopires/curso-fullcycle/blob/main/documentos/Mapa-fullcycle-novo.jpg)
 
+> #### Links Interessantes
+>
+> - <https://www.markdownguide.org/basic-syntax/>
+> - <https://github.com/codeedu>
+> - <https://github.com/codeedu/wsl2-docker-quickstart>
