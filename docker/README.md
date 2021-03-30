@@ -24,18 +24,24 @@
 
 [Livro Docker introdução - Wesley Willians](https://github.com/lpradopires/curso-fullcycle/blob/main/documentos/docker-e-docker-compose-na-pratica.pdf)
 
+[Difrença Bind Mounts e Volume](https://4sysops.com/archives/introduction-to-docker-bind-mounts-and-volumes/#:~:text=The%20main%20difference%20a%20bind,volumes%2C%20similar%20to%20bind%20mounts.)
+
+[Diferença Bind Mouns e Volume (2)](https://escoladaprogramacao.com.br/diferencas-entre-volume-e-bind-mount-no-docker/)
+
 ## Anotações
 
-##### Comando criar uma imagem
+**Comando criar uma imagem**
 
    * docker build -t usuario/nomeimagem:tag raizDockerFile
 
-##### Acessando container em execução, abre o bash do container
+**Acessando container em execução, abre o bash do container**
 
    * docker container exec -it idContainner /bin/bash
 
-##### Remover todos containers, inativos e ativos.
+**Remover todos containers, inativos e ativos.**
   
    * docker rm $(docker ps -a -q) -f
+   
+
 
 ### Desafio
