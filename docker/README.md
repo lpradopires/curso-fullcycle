@@ -1,5 +1,17 @@
 # Unidade Docker
 
+**Configuração Ambiente**
+
+[Instalação WSL2 - Docker](https://github.com/codeedu/wsl2-docker-quickstart)
+
+##### Exemplo .wslconfig
+[wsl2]  
+memory=8GB  
+processors=2  
+swap=0  
+localhostForwarding=true  
+
+
 ## Links Interessantes de pesquisa
 
 [Guia rápido comandos Docker](https://github.com/lpradopires/curso-fullcycle/blob/main/documentos/docker_cheatsheet_r3v2.pdf)
@@ -37,7 +49,7 @@
 * docker volume inspect nome_volume
 
 
-### Desafio
+## Desafio
 
 
 
