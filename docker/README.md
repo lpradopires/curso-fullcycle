@@ -18,6 +18,8 @@ localhostForwarding=true
 
 [Livro Docker introdução - Wesley Willians](https://github.com/lpradopires/curso-fullcycle/blob/main/documentos/docker-e-docker-compose-na-pratica.pdf)
 
+[Comandos Docker](https://medium.com/xp-inc/principais-comandos-docker-f9b02e6944cd)
+
 [Difrença Bind Mounts e Volume](https://4sysops.com/archives/introduction-to-docker-bind-mounts-and-volumes/#:~:text=The%20main%20difference%20a%20bind,volumes%2C%20similar%20to%20bind%20mounts.)
 
 [Diferença Bind Mouns e Volume (2)](https://escoladaprogramacao.com.br/diferencas-entre-volume-e-bind-mount-no-docker/)
@@ -26,29 +28,47 @@ localhostForwarding=true
 
 ## Anotações
 
+#### Opções mais utilizadas para o comando `docker run`
+ - `-i` permite interagir com o container
+ - `-t` associa o seu terminal ao terminal do container
+ - `-it` é apenas uma forma reduzida de escrever `-i -t`
+ - `--name algum-nome` permite atribuir um nome ao container em execução
+ - `-p 8080:80` mapeia a porta 80 do container para a porta 8080 do host
+ - `-d` executa o container em background
+ - `-v /pasta/host:/pasta/container` cria um volume '/pasta/container' dentro do container com o conteudo da pasta '/pasta/host' do host
+ 
+ ### docker run [options] [image] [command] [args]
+**Coloca um container em execução, por exemplo:**
+```
+docker run -it ubuntu bash
+```
+```
+root@13d2fb2f08e1:/#
+```
+se tudo der certo deve ser visualizado um terminal, de dentro do container em execução
+
 **Comando criar uma imagem**
-
-   * docker build -t usuario/nomeimagem:tag raizDockerFile
-
+```
+docker build -t usuario/nomeimagem:tag raizDockerFile
+```
 **Acessando container em execução, abre o bash do container**
-
-   * docker container exec -it idContainner /bin/bash
-
+```
+docker container exec -it idContainner /bin/bash
+```
 **Remover todos containers, inativos e ativos.**
-  
-   * docker rm $(docker ps -a -q) -f
-   
+```
+docker rm $(docker ps -a -q) -f
+```
 **Podemos quando necessario limpar os volumes não utilizados**
-  
-   * docker volume prune
-   
+```
+docker volume prune
+```
 **Trabalhando com volume** 
-
+```
 * docker volume ls
 * docker volume create nome_volume
 * docker volume inspect nome_volume
-
-
+```
 ## Desafio
 
 
