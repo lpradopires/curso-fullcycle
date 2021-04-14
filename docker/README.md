@@ -47,10 +47,6 @@ root@13d2fb2f08e1:/#
 ```
 se tudo der certo deve ser visualizado um terminal, de dentro do container em execução
 
-**Comando criar uma imagem**
-```
-docker build -t usuario/nomeimagem:tag raizDockerFile
-```
 **Acessando container em execução, abre o bash do container**
 ```
 docker container exec -it idContainner /bin/bash
@@ -59,16 +55,161 @@ docker container exec -it idContainner /bin/bash
 ```
 docker rm $(docker ps -a -q) -f
 ```
+
+**Comando criar uma imagem**
+```
+docker build -t usuario/nomeimagem:tag raizDockerFile
+```
+
+## Trabalhando com volume 
+**Lista volumes**
+```
+docker volume ls
+```
+**Criando volume**
+```
+docker volume create nome_volume
+```
+**Especionando Volume**
+```
+docker volume inspect nome_volume
+```
+
 **Podemos quando necessario limpar os volumes não utilizados**
 ```
 docker volume prune
 ```
-**Trabalhando com volume** 
+
+## Trabalhando com imagens
+**Lista Imagens**
 ```
-* docker volume ls
-* docker volume create nome_volume
-* docker volume inspect nome_volume
+docker images
 ```
+**Baixando uma imagen** 
+````
+docker pull nome_imagen
+docker pull ubuntu
+docker pull php:rc-alpine
+````
+**Removendo Imagen**
+```
+docker rmi nome_imagen
+docker rmi ubuntu
+docker rmi php:rc-alpine
+```
+
+**Criando uma imagen com Dockerfile**
+````
+//Exemplo Simples Dockerfile
+FROM nginx:latest
+RUN apt-get update
+RUN apt-get install vim -y
+````
+````
+docker build -t nome_usuario_dockerHub/nome_imagem:versão local_dockerfile
+docker build -t lppires/nginx-com-vim:latest .
+````
+**Publicando imagen no DockerHub**
+````
+docker login
+docker push lppires/nginx-com-vim:latest
+````
+
+## Trabalhando com Networks
+Tipos Networks
+* **bridge** (Rede padrão, rede criada pelo docker)
+* **host** (Mescla a rede docker com rede da maquina host)
+* **overlay** (comunicação entre maquinas docker)
+* **maclan**(?)
+* **none**(não faz parte de nenhuma rede)
+
+**Lista Comandos NetWork**
+````
+docker network COMMAND
+````
+**Lista Nteworks**
+````
+docker network ls
+````
+**Removendo todas Networks**
+````
+docker network prune
+````
+**Inspecionando a rede padrão**
+````
+docker run -d -it --name ubuntu1 bash
+docker run -d -it --name ubuntu2 bash
+docker inspect bridge
+````
+**Conectando no containner**
+````
+docker attach ubuntu1
+````
+
+**Criando Network** 
+````
+docker network create --driver bridge minha_rede
+`````
+**Rodando containner na network criada**
+````
+docker run -d -it --name ubuntu1 --network minha_rede bash
+docker run -d -it --name ubuntu2 --network minha_rede bash
+docker run -d -it --name ubuntu3 bash
+````
+**Conectando containner na network criada**
+````
+docker network connect minha_rede ubunto3
+`````
+> Ao criar uma rede é possível uma comunicação entre os containers usando o nome dado para o container.Um exemplo do container ubuntu1 é possível se comunicar com ubuntu2 pelo nome a uma resolução.
+> Já na rede padrão é possível se comunicar apenas pelo ip gerado na rede.
+
+#### Host Network
+
+**Subindo container na mesma rede da maquina host docker**
+````
+docker rum --rm -d --name nginx_lppires --network host nginx
+````
+
+#### Container acessando maquina host docker
+
+Para um container acessar a maquina host docker podemos utilizar a opção 
+http://host.docker.internal:port.
+Exemplo, na maquina host tem uma aplicação rodando na porta 8000, para meu container consumir esse recurso poderia ser utilizado este comando. 
+````
+curl http://host.docker.internal:8000
+````
+## Práticas 
+
+##### 1) Na pasta pratica-lareval, essa pratica demostra a criação e instalação do framework laravel em um dockerfile.
+
+**Criando imagem**
+````
+docker build -t lppires/laravel:latest .
+````
+**Subindo a imagen laravel utilizando CMD do dockerfile**
+````
+docker run --rm --name laravel -p 8000:8000 lppires/laravel:latest
+````
+**Subindo a imagen laravel subistituindo o CMD do dockerfile, pelo argumento pasado(--host=0.0.0.0 --port=8001)**
+````
+docker run --rm --name laravel -p 8000:8000 lppires/laravel:latest --host=0.0.0.0 --port=8001
+````
+
+#### 2)Na pasta pratica-node é criando um ambiente de desenvolvimento em node onde o que é alterado no container é alterado na maquina host e o que é alterado na host é alterado no container.
+````
+docker run --rm -it -v $(pwd)/:/usr/src/app -p 3000:3000 node:15 bash
+````
+
+## Otimizando Imagens
+
+**No exemplo foi gerado o arquivo dockerfile.prod do projeto laravel. Quando este build for executado ele vai rodar em dois estagios reduzindo o tamanho da imagem.**
+````
+docker build -t lppires/laravel:prod . -f Dockerfile.prod
+````
+
+![Exemplo Tamanhos](https://github.com/lpradopires/curso-fullcycle/blob/main/documentos/imagemlaravel.png)
+
+
 ## Desafio
 
 
