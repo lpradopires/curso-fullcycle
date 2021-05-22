@@ -209,8 +209,117 @@ docker build -t lppires/laravel:prod . -f Dockerfile.prod
 
 ![Exemplo Tamanhos](https://github.com/lpradopires/curso-fullcycle/blob/main/documentos/imagemlaravel.png)
 
+## Nginx como proxy reverso
 
-## Desafio
+Implementação Nginx como proxy-reverso, estamos subindo um container com o projeto laravel com outro container com o nginx fazendo para proxy-reverso, e criando uma rede docker para um container se comunicar com o outro. 
+
+1º Build criando imagem projeto laravel
+````
+docker build -t lppires/laravel:prod . -f Dockerfile.prod
+````
+2º Build criando imagem projeto nginx
+````
+docker build -t lppires/nginx:prod . -f Dockerfile.prod
+````
+3º Preciamos criar uma rede docker para a comunicação 
+````
+docker network create laranet
+````
+
+4º Criar container laravel 
+````
+docker run -d --network laranet -- name laravel lppires/laravel:prod
+````
+5º Criar container nginx 
+````
+docker run -d --network laranet --name nginx -p 8080:80 lppires/nginx:produ
+````
+Acesse localhost:8080, projeto lareval iniciado.
+
+# DOCKER-COMPOSE
+
+## Iniciando com Docker-compose
+
+É uma ferramenta que automatiza processos do docker.
+
+No arquivo docker-compose-v1.yaml, estamos subindo o projeto laravel com nginx, atraves do arquivo.
+Porém neste momento as imagens já devem estar criadas.
+basta rodar
+
+````
+docker-compose -f docker-compose.v1.yaml up;
+````
+Para parar o servico 
+````
+docker-compose down;
+````
+Para listar servico 
+````
+docker-compose ps;
+````
+
+## Buildando images com Docker-compose
+
+No arquivo docker-compose-v2.yaml estamos subindo o container, porém agora vamos rodar o build e criar as imagens neste momento
+````
+docker-compose -f docker-compose.v2.yaml up
+````
+Para subir a servico e recriar as imagens, -d libera o terminal, --build recria a imagen
+````
+docker-compose -f docker-compose.v2.yaml up -d --build. 
+````
+## Criando banco de dados MySQL
+
+Na pasta banco-mysql, no arquivo dcoker-compose.mysql.yaml estamos mapeando um volume para garantir que quando o container seje finalizado o dados não sejam perdidos. 
+````
+docker-compose -f docker-compose.mysql.yaml up
+````
+## Node com Mysql
+
+Vamos intergar a aplicação node com mysql fazendo os containeres se comunicarem.
+Atenção para a network utilizada os dois containeres estão na mesma network, para poderem se comunicarem. 
+Como precisamos garantir que o mysql esteja iniciado primeiro que o app node, precisamos utilizar um opção chamada [Dockerize ](https://github.com/jwilder/dockerize), utilizando entypoint.
+
+Executando exemplo. 
+
+1º Iniciar o comtainner mysql, pasta banco-mysql
+````
+docker-compose -f docker-compose.mysql.yaml up -d 
+````
+2º Acessando container 
+````
+docker exec -it db bash
+````
+3º Acessando mysql
+````
+mysql -uroot -p
+password: root
+````
+4º Criando tabela peplo 
+````
+use nodedb;
+CREATE TABLE people (
+    id int not null auto_increment,
+    name varchar(255),
+    primary key(id)
+);
+````
+5º Acesse container app
+````
+docker exec -it app bash
+````
+6º execute 
+````
+npm install
+````
+7º execute
+````
+node index.js
+````
+O insert na tabela people, aconteceu com sucesso.
+
+
+# Desafio
 
 
 
