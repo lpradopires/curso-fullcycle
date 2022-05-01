@@ -4,6 +4,9 @@
 
 [Instalação WSL2 - Docker](https://github.com/codeedu/wsl2-docker-quickstart)
 
+Erro ao iniciar linux
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+
 ##### Exemplo .wslconfig
 [wsl2]  
 memory=8GB  
