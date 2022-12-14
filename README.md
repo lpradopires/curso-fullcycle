@@ -1,4 +1,4 @@
-# Curso Full Cycle 2.0
+# Curso Full Cycle 3.0
 
 Repositório criado para entrega e praticas do curso FullCycle,  voltado a desenvolver praticas como devOps, microserviços, arquitetura de projetos, docker, integração continua, kubernetes.
 
